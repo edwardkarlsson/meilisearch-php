@@ -1,5 +1,5 @@
 {
-    "name": "meilisearch/meilisearch-php",
+    "name": "edwardkarlsson/meilisearch-php",
     "description": "PHP wrapper for the Meilisearch API",
     "keywords": [
         "meilisearch",
