@@ -53,11 +53,19 @@ class SearchResult implements \Countable, \IteratorAggregate
         } else {
             $this->numberedPagination = true;
 
-            $this->hitsPerPage = $body['hitsPerPage'];
-            $this->page = $body['page'];
-            $this->totalPages = $body['totalPages'];
-            $this->totalHits = $body['totalHits'];
-            $this->hitsCount = $body['totalHits'];
+            if (isset($body['nbHits'])) { // Used by v0.2.7 (so we can assume the other keys are of the same version)
+                $this->hitsPerPage = count($body['hits']);
+                $this->page = (int) ($body['offset'] / $body['limit']) + 1;
+                $this->totalPages = (int) ceil($body['nbHits'] / $body['limit']);
+                $this->totalHits = $body['nbHits'];
+                $this->hitsCount = $body['nbHits'];
+            } else {
+                $this->hitsPerPage = $body['hitsPerPage'];
+                $this->page = $body['page'];
+                $this->totalPages = $body['totalPages'];
+                $this->totalHits = $body['totalHits'];
+                $this->hitsCount = $body['totalHits'];
+            }
         }
 
         $this->hits = $body['hits'] ?? [];
